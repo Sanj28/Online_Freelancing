@@ -1,0 +1,211 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<!-- HOME -->
+  <section class="home-section section-hero overlay bg-image"
+  style="background-image: url('{% static 'images/hero_1.jpg' %}');" id="home-section">
+  <div class="container">
+    <div class="row align-items-center justify-content-center">
+      <div class="col-md-26">
+        <div class="mb-5 text-center">
+          <h1 class="text-white font-weight-bold" style="color:white">ABOUT US</h1>
+          <h3 style="color:white">Elance is a better way of working, helping businesses find more flexibility and connecting talent with more opportunities.</h3>
+          <h3 style="color:white">Our mission to create economic opportunities so people have better lives has taken us so much further. As a result, we’ve become the world’s work marketplace where every day businesses of all sizes and independent talent from around the globe meet here to accomplish incredible things.</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+  <a href="#next" class="scroll-button smoothscroll">
+    <span class=" icon-keyboard_arrow_down"></span>
+  </a>
+</section>
+
+<!-- How  Apply Process Start-->
+<div class="apply-process-area apply-bg pt-150 pb-150" data-background="assets/img/gallery/how-applybg.png">
+    <div class="container">
+        <!-- Section Tittle -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-tittle white-text text-center">
+                    <span>Apply process</span>
+                    <h2> How it works</h2>
+                </div>
+            </div>
+        </div>
+        <!-- Apply Process Caption -->
+        <div class="row">
+            <div class="col-lg-4 col-md-6">
+                <div class="single-process text-center mb-30">
+                    <div class="process-ion">
+                        <span class="flaticon-search"></span>
+                    </div>
+                    <div class="process-cap">
+                        <h5>1. Search a job</h5>
+                    <p>Sorem spsum dolor sit amsectetur adipisclit, seddo eiusmod tempor incididunt ut laborea.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="single-process text-center mb-30">
+                    <div class="process-ion">
+                        <span class="flaticon-curriculum-vitae"></span>
+                    </div>
+                    <div class="process-cap">
+                        <h5>2. Apply for job</h5>
+                    <p>Sorem spsum dolor sit amsectetur adipisclit, seddo eiusmod tempor incididunt ut laborea.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="single-process text-center mb-30">
+                    <div class="process-ion">
+                        <span class="flaticon-tour"></span>
+                    </div>
+                    <div class="process-cap">
+                        <h5>3. Get your job</h5>
+                    <p>Sorem spsum dolor sit amsectetur adipisclit, seddo eiusmod tempor incididunt ut laborea.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- How  Apply Process End-->
+<!-- <section class="bg-light pt-5 testimony-full">
+
+  <div class="owl-carousel single-carousel">
+
+
+     <div class="container">
+      <div class="row">
+        <div class="col-lg-6 align-self-center text-center text-lg-left">
+          <blockquote>
+            <p>&ldquo;Soluta quasi cum delectus eum facilis recusandae nesciunt molestias accusantium libero dolores
+              repellat id in dolorem laborum ad modi qui at quas dolorum voluptatem voluptatum repudiandae.&rdquo;</p>
+            <p><cite> &mdash; Corey Woods, @Dribbble</cite></p>
+          </blockquote>
+        </div>
+        <div class="col-lg-6 align-self-end text-center text-lg-right">
+          <img src="images/person_transparent_2.png" alt="Image" class="img-fluid mb-0">
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 align-self-center text-center text-lg-left">
+          <blockquote>
+            <p>&ldquo;Soluta quasi cum delectus eum facilis recusandae nesciunt molestias accusantium libero dolores
+              repellat id in dolorem laborum ad modi qui at quas dolorum voluptatem voluptatum repudiandae.&rdquo;</p>
+            <p><cite> &mdash; Chris Peters, @Google</cite></p>
+          </blockquote>
+        </div>
+        <div class="col-lg-6 align-self-end text-center text-lg-right">
+          <img src="images/person_transparent.png" alt="Image" class="img-fluid mb-0">
+        </div>
+      </div>
+    </div> 
+
+  </div>
+
+</section>  -->
+
+
+{% endblock %}
+{% block extra_scripts %}
+<script>
+
+$("#ajax_listing_paginattion" ).delegate( "a#ajax_paginator", "click", function( event ) {
+		event.preventDefault();
+    joblist = ``
+    next_paging = ``
+    prev_paging = ``
+    page_navigator = ``
+		var page_ref = $(this).attr('href');
+    var page_number = page_ref.slice(6);
+    console.log('page_number', page_number);
+		$.ajax({
+					type: "GET",
+					url: "{% url 'jobapp:home' %}", 
+					data : {    
+          page : page_number, 
+				},
+        success: function (response) {
+          $('#job').html('')
+                    response.job_lists.map(function (job) {
+
+                        joblist+=`
+                          <li id="next" class="job-listing d-block d-sm-flex pb-3 pb-sm-0 align-items-center">
+                            <a href="/job/${job.id}/"></a>
+                              <div class="job-listing-logo">
+                                <img src="{% static 'images/i.jpg' %}" alt="Free Website Template by Free-Template.co"
+                                  class="img-fluid">
+                              </div>
+
+                              <div class="job-listing-about d-sm-flex custom-width w-100 justify-content-between mx-4">
+                                <div class="job-listing-position custom-width w-50 mb-3 mb-sm-0">
+                                  <h2>${ job.title }</h2>
+                                  <strong>${ job.company_name }</strong>
+                                </div>
+                                <div class="job-listing-location mb-3 mb-sm-0 custom-width w-25">
+                                  <span class="icon-room"></span>${ job.location } 
+                                </div>
+                                
+                                <div class="job-listing-meta">
+                                  ${ job.job_type == '1'
+                                  ?  
+                                  `<span class="badge badge-success">
+                                    Full Time
+                                  </span>`
+                                  : 
+                                  job.job_type == '2' 
+                                  ?  
+                                  `<span class="badge badge-danger">
+                                    Part Time
+                                  </span>` 
+                                  :
+                                  `<span class="badge badge-info">
+                                    Internship
+                                  </span>
+                                  `
+                                  }
+                                </div>
+                              </div>
+                            </li>
+                        ` 
+                      })
+
+                        $('#job').html(joblist)
+                        response.next_page_number != null ?
+                        next_paging+=`<a id="ajax_paginator" class="next" href="?page=${ response.next_page_number }">Next</a>`
+                        : ''
+
+                        $('div>#next_page').html(next_paging)
+                        $('div>.active').removeClass('active')
+                        $('div>.ajax_paginator_'+response.current_page_no).addClass('active')
+                        
+                        // .attr('href','http://example.com')
+                        // .removeAttr("href");
+                        
+                        response.current_page_no > 1 ?
+                        prev_paging+=`<a id="ajax_paginator" href="?page=${ response.prev_page_number }" class="prev">Prev</a>`
+                        : ''
+                        $('div>#prev_page').html(prev_paging)
+
+                        page_navigator+=`Showing ${ response.current_page_no } of ${ response.no_of_page } Pages`
+                        $('div>#page_navigator').html(page_navigator)
+                      
+                    },
+                    
+				error: function () {
+					alert('Error Occured');
+				}
+			});
+
+	});  
+  
+  
+	</script>
+{% endblock %}
